@@ -206,6 +206,7 @@ void idInventory::Clear( void ) {
 	armor				= 0;
 	maxarmor			= 0;
 	secretAreasDiscovered = 0;
+	rupees = 0;
 
 	memset( ammo, 0, sizeof( ammo ) );
 
@@ -404,6 +405,7 @@ void idInventory::Save( idSaveGame *savefile ) const {
 	savefile->WriteInt( powerups );
 	savefile->WriteInt( armor );
 	savefile->WriteInt( maxarmor );
+	savefile->WriteInt(rupees); 
 
 	for( i = 0; i < MAX_AMMO; i++ ) {
 		savefile->WriteInt( ammo[ i ] );
@@ -484,6 +486,7 @@ void idInventory::Restore( idRestoreGame *savefile ) {
 	savefile->ReadInt( powerups );
 	savefile->ReadInt( armor );
 	savefile->ReadInt( maxarmor );
+	savefile->ReadInt(rupees);
 
 	for( i = 0; i < MAX_AMMO; i++ ) {
 		savefile->ReadInt( ammo[ i ] );
@@ -839,6 +842,16 @@ bool idInventory::Give( idPlayer *owner, const idDict &spawnArgs, const char *st
 	idStr					weaponString;
 	int						max;
 	int						amount;
+
+	if (!idStr::Icmp(statname, "rupees")){
+		int amount = atoi(value);
+		if (checkOnly){
+			return true;
+		}
+		rupees += amount;
+		gameLocal.Printf("RUPEES PICKUP: now %d\n", rupees);
+		return true;
+	}
 
 	if ( !idStr::Icmpn( statname, "ammo_", 5 ) ) {
 		i = AmmoIndexForAmmoClass( statname );
