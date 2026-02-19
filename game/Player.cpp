@@ -843,6 +843,7 @@ bool idInventory::Give( idPlayer *owner, const idDict &spawnArgs, const char *st
 	int						max;
 	int						amount;
 
+	// Rupee pickup
 	if (!idStr::Icmp(statname, "rupees")){
 		int amount = atoi(value);
 		if (checkOnly){
