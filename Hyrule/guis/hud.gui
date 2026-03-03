@@ -1,0 +1,34 @@
+windowDef Desktop {
+	rect        0,0,640,480
+	visible     1
+	nocursor    1
+	menugui     0
+
+	// Minimal Hyrule HUD showing rupee count only.
+	// C++ pushes "player_rupees" into the gui state; this HUD reads it as gui::player_rupees.
+
+	windowDef rupeeCounter {
+		rect        480, 8, 150, 24    // x, y, w, h – adjust as needed
+		visible     1
+		forecolor   1,1,1,1
+		textscale   0.30
+
+		// Label on the left
+		windowDef label {
+			rect        0, 0, 80, 24
+			visible     1
+			forecolor   1,1,1,1
+			textscale   0.30
+			text        "Rupees:"
+		}
+
+		// Numeric value on the right – uses the C++ state "player_rupees"
+		windowDef value {
+			rect        80, 0, 70, 24
+			visible     1
+			forecolor   1,1,0.3,1
+			textscale   0.30
+			text        "gui::player_rupees"
+		}
+	}
+}

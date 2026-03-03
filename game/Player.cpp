@@ -3444,6 +3444,9 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	viewAxis.ProjectVector( lastDamageDir, localDir );
 	_hud->SetStateFloat( "hitdir", localDir.ToAngles()[YAW] + 180.0f );
 
+	// Rupee count
+	_hud->SetStateInt( "player_rupees", inventory.rupees );
+
 	//_hud->HandleNamedEvent( "updateArmorHealthAir" );
 
 	if ( weapon ) {
