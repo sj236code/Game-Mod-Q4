@@ -1,0 +1,48 @@
+// Hyrule mod – rupee pickups
+// These entityDefs give rupees via inventory.Give(..., "rupees", amount).
+
+entityDef item_rupee_green {
+    "spawnclass"        "idItem"
+
+    "model"             "models/items/health_small.lwo"
+
+    "inv_name"          "Green Rupee"
+    "inv_icon"          "guis/assets/hud/rupee_green"
+
+    "inv_rupees"        "1"
+
+    // Avoid using the render model as a trace model
+    "noclipmodel"       "1"
+    "simpleitem"        "1"
+
+    "respawn"           "0"
+}
+
+entityDef item_rupee_blue {
+	"spawnclass"		"idItem"
+	"model"				"models/items/health_small.lwo"
+
+	"inv_name"			"Blue Rupee"
+	"inv_icon"			"guis/assets/hud/rupee_blue"
+
+	"inv_rupees"		"5"
+
+	"respawn"			"0"
+	"noclipmodel"		"1"
+	"simpleitem"		"1"
+}
+
+entityDef item_rupee_red {
+	"spawnclass"		"idItem"
+	"model"				"models/items/health_small.lwo"
+
+	"inv_name"			"Red Rupee"
+	"inv_icon"			"guis/assets/hud/rupee_red"
+
+	"inv_rupees"		"20"
+
+	"respawn"			"0"
+	"noclipmodel"		"1"
+	"simpleitem"		"1"
+}
+
