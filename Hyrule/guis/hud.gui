@@ -8,12 +8,11 @@ windowDef Desktop {
 	// C++ pushes "player_rupees" into the gui state; this HUD reads it as gui::player_rupees.
 
 	windowDef rupeeCounter {
-		rect        480, 8, 150, 24    // x, y, w, h – adjust as needed
+		rect        480, 8, 150, 24
 		visible     1
 		forecolor   1,1,1,1
 		textscale   0.30
 
-		// Label on the left
 		windowDef label {
 			rect        0, 0, 80, 24
 			visible     1
@@ -22,13 +21,40 @@ windowDef Desktop {
 			text        "Rupees:"
 		}
 
-		// Numeric value on the right – uses the C++ state "player_rupees"
 		windowDef value {
 			rect        80, 0, 70, 24
 			visible     1
 			forecolor   1,1,0.3,1
 			textscale   0.30
 			text        "gui::player_rupees"
+		}
+	}
+
+	// Purchase / error notification – shown briefly after a store transaction.
+	// C++ calls:  hud->SetStateString("itemPickupText", "...message...");
+	//             hud->HandleNamedEvent("itemPickup");
+	windowDef storeNotify {
+		rect        170, 80, 300, 28
+		visible     0
+		backcolor   0, 0, 0, 0.55
+		forecolor   1, 1, 0.3, 1
+		textscale   0.35
+		textalign   1
+		text        "gui::itemPickupText"
+
+		// Triggered by HandleNamedEvent("itemPickup") from C++
+		onNamedEvent itemPickup {
+			set "visible" "1" ;
+			transition "forecolor" "1 1 0.3 1" "1 1 0.3 0" "2000" ;
+			transition "backcolor" "0 0 0 0.55" "0 0 0 0" "2000" ;
+		}
+
+		// Hide itself once the fade is done
+		onTime 2100 {
+			set "visible" "0" ;
+			set "forecolor" "1 1 0.3 1" ;
+			set "backcolor" "0 0 0 0.55" ;
+			resetTime "0" ;
 		}
 	}
 }

@@ -6047,12 +6047,20 @@ void idPlayer::DropWeapon( void ) {
 idPlayer::ActiveGui
 ===============
 */
-idUserInterface *idPlayer::ActiveGui( void ) {
+idUserInterface* idPlayer::ActiveGui(void) {
+	gameLocal.Printf("ActiveGui: storeSystemOpen=%d objectiveSystem=%p focusUI=%p\n",
+		storeSystemOpen ? 1 : 0, objectiveSystem, focusUI);
+
 #ifdef _XENON
-	if ( objectiveSystemOpen ) {
+	if (objectiveSystemOpen) {
 		return 0;
 	}
 #endif
+
+	if (storeSystemOpen && objectiveSystem) {
+		return objectiveSystem;
+	}
+
 	return focusUI;
 }
 
@@ -6566,7 +6574,96 @@ bool idPlayer::HandleSingleGuiCommand( idEntity *entityGui, idLexer *src ) {
 		return true;
 	}
 
-	src->UnreadToken( &token );
+	if (token.Icmp("close") == 0) {
+		if (objectiveSystemOpen && objectiveSystem) {
+			objectiveSystem->Activate(false, gameLocal.time);
+			objectiveSystemOpen = false;
+			objectiveSystem = NULL;
+	#ifdef _XENON
+			g_ObjectiveSystemOpen = false;
+	#endif
+		}
+		return true;
+	}
+
+	//  Hyrule Mod: Rupee Store purchases 
+	if (token.Icmp("hyrule_buy") == 0) {
+		idToken itemToken;
+		if (!src->ReadToken(&itemToken)) {
+			return false;
+		}
+
+		struct StoreItem {
+			const char* name;
+			int cost;
+		};
+
+		if (itemToken.Icmp("health_upgrade") == 0) {
+			const int COST = 10;
+			if (inventory.rupees < COST) {
+				gameLocal.Printf("HYRULE STORE: Need %d rupees (have %d)\n", COST, inventory.rupees);
+				if (hud) { hud->SetStateString("itemPickupText", "Not enough rupees!"); hud->HandleNamedEvent("itemPickup"); }
+			}
+			else {
+				inventory.rupees -= COST;
+				inventory.maxHealth += 25;
+				if (inventory.maxHealth > 400) { inventory.maxHealth = 400; }
+				gameLocal.Printf("HYRULE STORE: Health Upgrade! maxHealth=%d, rupees=%d\n", inventory.maxHealth, inventory.rupees);
+				if (hud) {
+					hud->SetStateInt("player_rupees", inventory.rupees);
+					hud->SetStateString("itemPickupText", "Max Health +25!");
+					hud->HandleNamedEvent("itemPickup");
+				}
+			}
+			return true;
+		}
+
+		if (itemToken.Icmp("speed_upgrade") == 0) {
+			const int COST = 15;
+			if (inventory.rupees < COST) {
+				gameLocal.Printf("HYRULE STORE: Need %d rupees (have %d)\n", COST, inventory.rupees);
+				if (hud) { hud->SetStateString("itemPickupText", "Not enough rupees!"); hud->HandleNamedEvent("itemPickup"); }
+			}
+			else {
+				inventory.rupees -= COST;
+				extern idCVar pm_speed;
+				pm_speed.SetFloat(pm_speed.GetFloat() * 1.10f);
+				gameLocal.Printf("HYRULE STORE: Speed Upgrade! pm_speed=%.1f, rupees=%d\n", pm_speed.GetFloat(), inventory.rupees);
+				if (hud) {
+					hud->SetStateInt("player_rupees", inventory.rupees);
+					hud->SetStateString("itemPickupText", "Run Speed +10%!");
+					hud->HandleNamedEvent("itemPickup");
+				}
+			}
+			return true;
+		}
+
+		if (itemToken.Icmp("ammo_refill") == 0) {
+			const int COST = 5;
+			if (inventory.rupees < COST) {
+				gameLocal.Printf("HYRULE STORE: Need %d rupees (have %d)\n", COST, inventory.rupees);
+				if (hud) { hud->SetStateString("itemPickupText", "Not enough rupees!"); hud->HandleNamedEvent("itemPickup"); }
+			}
+			else {
+				inventory.rupees -= COST;
+				Event_RefillAmmo();
+				gameLocal.Printf("HYRULE STORE: Ammo Refill! rupees=%d\n", inventory.rupees);
+				if (hud) {
+					hud->SetStateInt("player_rupees", inventory.rupees);
+					UpdateHudAmmo(hud);
+					hud->SetStateString("itemPickupText", "All Ammo Refilled!");
+					hud->HandleNamedEvent("itemPickup");
+				}
+			}
+			return true;
+		}
+
+		gameLocal.Printf("HYRULE STORE: Unknown item '%s'\n", itemToken.c_str());
+		return true;
+	}
+	//  end Hyrule store 
+
+	src->UnreadToken(&token);
 	return false;
 }
 
@@ -8626,6 +8723,39 @@ void idPlayer::PerformImpulse( int impulse ) {
  			LastWeapon();
  			break;
  		}
+
+		// Hyrule Mod: Open/close the Rupee Store
+		case 57: {
+			if (entityNumber != gameLocal.localClientNum) {
+				break;
+			}
+			if (!storeSystemOpen) {
+				// Opening the store
+				idUserInterface* storeGui = uiManager->FindGui("guis/store.gui", true, false, true);
+				if (storeGui) {
+					storeGui->SetStateInt("player_rupees", inventory.rupees);
+					storeGui->StateChanged(gameLocal.time);
+					objectiveSystem = storeGui;
+					objectiveSystem->Activate(true, gameLocal.time);
+					objectiveSystemOpen = true;
+					storeSystemOpen = true;
+#ifdef _XENON
+					g_ObjectiveSystemOpen = true;
+#endif
+				}
+			}
+			else {
+				// Closing the store
+				objectiveSystem->Activate(false, gameLocal.time);
+				objectiveSystemOpen = false;
+				storeSystemOpen = false;
+				objectiveSystem = NULL;
+#ifdef _XENON
+				g_ObjectiveSystemOpen = false;
+#endif
+			}
+			break;
+		}
 	} 
 
 //RAVEN BEGIN
@@ -8657,6 +8787,14 @@ idPlayer::HandleESC
 ==============
 */
 bool idPlayer::HandleESC( void ) {
+	// Close store if open
+	if (storeSystemOpen) {
+		objectiveSystemOpen = false;
+		storeSystemOpen = false;
+		objectiveSystem = NULL;
+		SetInfluenceFov(0);
+		return true;
+	}
 
 // jdischler: Straight from the top, cinematic skipping on xenon is OFFICIALLY OUT.  Too many problems with it and not enough time to properly address them.
 #ifndef _XENON

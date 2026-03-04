@@ -345,6 +345,7 @@ public:
 	idUserInterface *		objectiveSystem;
 	idUserInterface *		cinematicHud;
 	bool					objectiveSystemOpen;
+	bool					storeSystemOpen;
 	bool					objectiveButtonReleased;
 	bool					disableHud;
 	bool					showNewObjectives;
