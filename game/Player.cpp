@@ -1122,6 +1122,7 @@ idPlayer::idPlayer() {
 	mphud					= NULL;
 	objectiveSystem			= NULL;
 	objectiveSystemOpen		= false;
+	storeSystemOpen         = false;
 	showNewObjectives		= false;
 #ifdef _XENON
 	g_ObjectiveSystemOpen	= false;
@@ -7892,6 +7893,14 @@ void idPlayer::UpdateViewAngles( void ) {
 		return;
 	}
 
+	// Hyrule Mod: freeze view while store is open
+	if (storeSystemOpen) {
+		gameLocal.Printf("*** STORE OPEN - FREEZING VIEW ***\n");
+		UpdateDeltaViewAngles(viewAngles);
+		return;
+	}
+	gameLocal.Printf("UpdateViewAngles: storeSystemOpen=%d\n", storeSystemOpen ? 1 : 0);
+
 	// circularly clamp the angles with deltas
 //	if( gameLocal.localClientNum == entityNumber ) {
 //		gameLocal.Printf( "BEFORE VIEWANGLES: %s\n", viewAngles.ToString() );
@@ -8538,6 +8547,66 @@ void idPlayer::GenerateImpulseForBuyAttempt( const char* itemName ) {
 }
 // RITUAL END
 
+void idPlayer::HyruleBuyItem(const char* itemName) {
+	if (!idStr::Icmp(itemName, "health_upgrade")) {
+		const int COST = 10;
+		if (inventory.rupees < COST) {
+			gameLocal.Printf("HYRULE STORE: Need %d rupees (have %d)\n", COST, inventory.rupees);
+			if (hud) { hud->SetStateString("itemPickupText", "Not enough rupees!"); hud->HandleNamedEvent("itemPickup"); }
+		}
+		else {
+			inventory.rupees -= COST;
+			inventory.maxHealth += 25;
+			if (inventory.maxHealth > 400) { inventory.maxHealth = 400; }
+			if (hud) {
+				hud->SetStateInt("player_rupees", inventory.rupees);
+				hud->SetStateString("itemPickupText", "Max Health +25!");
+				hud->HandleNamedEvent("itemPickup");
+			}
+		}
+	}
+	else if (!idStr::Icmp(itemName, "speed_upgrade")) {
+		const int COST = 15;
+		if (inventory.rupees < COST) {
+			gameLocal.Printf("HYRULE STORE: Need %d rupees (have %d)\n", COST, inventory.rupees);
+			if (hud) { hud->SetStateString("itemPickupText", "Not enough rupees!"); hud->HandleNamedEvent("itemPickup"); }
+		}
+		else {
+			inventory.rupees -= COST;
+			extern idCVar pm_speed;
+			pm_speed.SetFloat(pm_speed.GetFloat() * 1.10f);
+			if (hud) {
+				hud->SetStateInt("player_rupees", inventory.rupees);
+				hud->SetStateString("itemPickupText", "Run Speed +10%!");
+				hud->HandleNamedEvent("itemPickup");
+			}
+		}
+	}
+	else if (!idStr::Icmp(itemName, "ammo_refill")) {
+		const int COST = 5;
+		if (inventory.rupees < COST) {
+			gameLocal.Printf("HYRULE STORE: Need %d rupees (have %d)\n", COST, inventory.rupees);
+			if (hud) { hud->SetStateString("itemPickupText", "Not enough rupees!"); hud->HandleNamedEvent("itemPickup"); }
+		}
+		else {
+			inventory.rupees -= COST;
+			Event_RefillAmmo();
+			if (hud) {
+				hud->SetStateInt("player_rupees", inventory.rupees);
+				UpdateHudAmmo(hud);
+				hud->SetStateString("itemPickupText", "All Ammo Refilled!");
+				hud->HandleNamedEvent("itemPickup");
+			}
+		}
+	}
+
+	// refresh rupee count in store GUI
+	if (objectiveSystem) {
+		objectiveSystem->SetStateInt("player_rupees", inventory.rupees);
+		objectiveSystem->StateChanged(gameLocal.time);
+	}
+}
+
 
 /*
 ==============
@@ -8696,9 +8765,28 @@ void idPlayer::PerformImpulse( int impulse ) {
 		case IMPULSE_109:	AttemptToBuyItem( "weapon_napalmgun" );				break;
 		case IMPULSE_110:	/* AttemptToBuyItem( "weapon_dmg" );*/				break;
 		case IMPULSE_111:	break; // Unused
-		case IMPULSE_112:	break; // Unused
-		case IMPULSE_113:	break; // Unused
-		case IMPULSE_114:	break; // Unused
+		case IMPULSE_112: //up
+			if (storeSystemOpen && objectiveSystem) {
+				storeSelection = (storeSelection + 2) % 3;
+				objectiveSystem->SetStateInt("store_selection", storeSelection);
+				objectiveSystem->StateChanged(gameLocal.time);
+				objectiveSystem->HandleNamedEvent("selectionChanged");
+			}
+			break;
+		case IMPULSE_113://down
+			if (storeSystemOpen && objectiveSystem) {
+				storeSelection = (storeSelection + 1) % 3;
+				objectiveSystem->SetStateInt("store_selection", storeSelection);
+				objectiveSystem->StateChanged(gameLocal.time);
+				objectiveSystem->HandleNamedEvent("selectionChanged");
+			}
+			break;
+		case IMPULSE_114: // Confirm / Buy
+			if (storeSystemOpen && objectiveSystem) {
+				const char* items[] = { "health_upgrade", "speed_upgrade", "ammo_refill" };
+				HyruleBuyItem(items[storeSelection]);
+			}
+			break;
 		case IMPULSE_115:	break; // Unused
 		case IMPULSE_116:	break; // Unused
 		case IMPULSE_117:	break; // Unused
@@ -8732,11 +8820,15 @@ void idPlayer::PerformImpulse( int impulse ) {
 			if (!storeSystemOpen) {
 				// Opening the store
 				idUserInterface* storeGui = uiManager->FindGui("guis/store.gui", true, false, true);
+				gameLocal.Printf("*** storeGui=%p ***\n", storeGui);
 				if (storeGui) {
+					storeSelection = 0;
 					storeGui->SetStateInt("player_rupees", inventory.rupees);
 					storeGui->StateChanged(gameLocal.time);
 					objectiveSystem = storeGui;
 					objectiveSystem->Activate(true, gameLocal.time);
+					objectiveSystem->SetStateBool("gui_showCursor", true);
+					objectiveSystem->StateChanged(gameLocal.time);
 					objectiveSystemOpen = true;
 					storeSystemOpen = true;
 #ifdef _XENON

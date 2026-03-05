@@ -1,0 +1,319 @@
+/*
+================================================================================
+  Hyrule Mod – Rupee Store GUI
+  File: guis/store.gui
+
+  Opens when the player presses the Store impulse key.
+  Sends "hyrule_buy <item>" commands to the game DLL via the "cmd" keyword.
+  The game DLL (Player.cpp) intercepts those commands and handles deduction
+  of rupees + granting the upgrade.
+
+  Items sold:
+    health_upgrade   – costs 10 rupees, increases max health
+    speed_upgrade    – costs 15 rupees, increases run speed
+    ammo_refill      – costs  5 rupees, refills all ammo/arrows
+
+  Navigation:
+    UP/DOWN arrows   – move selection highlight
+    ENTER            – buy selected item
+    ESC              – close store
+================================================================================
+*/
+
+windowDef Desktop {
+    rect        0, 0, 640, 480
+    menugui     1
+    nocursor    0
+    noevents    0
+    visible     1
+
+    float       "store_selection"   0
+
+    onActivate {
+        set "desktop::store_selection" "0" ;
+        set "Item1_BG::bordercolor" "1 1 0 1" ;
+        set "Item2_BG::bordercolor" "0.30 0.50 0.90 0.70" ;
+        set "Item3_BG::bordercolor" "0.90 0.30 0.30 0.70" ;
+    }
+
+    onDeactivate {
+        // reset borders on close
+        set "Item1_BG::bordercolor" "0.30 0.70 0.30 0.70" ;
+        set "Item2_BG::bordercolor" "0.30 0.50 0.90 0.70" ;
+        set "Item3_BG::bordercolor" "0.90 0.30 0.30 0.70" ;
+    }
+
+    onNamedEvent selectionChanged {
+        // reset all borders to their default colors
+        set "Item1_BG::bordercolor" "0.30 0.70 0.30 0.70" ;
+        set "Item2_BG::bordercolor" "0.30 0.50 0.90 0.70" ;
+        set "Item3_BG::bordercolor" "0.90 0.30 0.30 0.70" ;
+
+        // highlight the selected item in gold
+        if ( "desktop::store_selection" == 0 ) {
+            set "Item1_BG::bordercolor" "1 1 0 1" ;
+        } else if ( "desktop::store_selection" == 1 ) {
+            set "Item2_BG::bordercolor" "1 1 0 1" ;
+        } else if ( "desktop::store_selection" == 2 ) {
+            set "Item3_BG::bordercolor" "1 1 0 1" ;
+        }
+    }
+
+    // ── Dark semi-transparent backdrop ──────────────────────────────────────
+    windowDef Background {
+        rect        120, 60, 400, 340
+        backcolor   0, 0, 0, 0.82
+        bordercolor 0.82, 0.70, 0.10, 1       // Zelda gold border
+        bordersize  3
+        visible     1
+    }
+
+    // ── Title bar ───────────────────────────────────────────────────────────
+    windowDef TitleBar {
+        rect        120, 60, 400, 44
+        backcolor   0.82, 0.70, 0.10, 0.90    // gold header
+        visible     1
+    }
+
+    windowDef TitleText {
+        rect        120, 64, 400, 36
+        text        "HYRULE SHOP"
+        textscale   0.55
+        forecolor   0, 0, 0, 1
+        textalign   1                          // center
+        visible     1
+    }
+
+    // ── Subtitle / rupee balance hint ───────────────────────────────────────
+    windowDef SubTitle {
+        rect        120, 106, 400, 22
+        text        "~ spend your rupees ~"
+        textscale   0.32
+        forecolor   0.82, 0.70, 0.10, 0.85
+        textalign   1
+        visible     1
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    //  ITEM 1 – Health Upgrade  (10 rupees)
+    // ════════════════════════════════════════════════════════════════════════
+    windowDef Item1_BG {
+        rect        140, 140, 360, 52
+        backcolor   0.10, 0.18, 0.10, 0.80
+        bordercolor 0.30, 0.70, 0.30, 0.70
+        bordersize  1
+        visible     1
+    }
+
+    windowDef Item1_Icon {
+        rect        148, 148, 36, 36
+        background  "guis/assets/hud/rupee_green"
+        visible     1
+    }
+
+    windowDef Item1_Label {
+        rect        192, 143, 200, 22
+        text        "Health Upgrade"
+        textscale   0.38
+        forecolor   0.70, 1.0, 0.70, 1
+        visible     1
+    }
+
+    windowDef Item1_Desc {
+        rect        192, 163, 200, 18
+        text        "Increase max health by 25"
+        textscale   0.28
+        forecolor   0.75, 0.75, 0.75, 1
+        visible     1
+    }
+
+    windowDef Item1_Price {
+        rect        390, 148, 90, 22
+        text        "10 rupees"
+        textscale   0.32
+        forecolor   0.82, 0.70, 0.10, 1
+        textalign   2                          // right-align
+        visible     1
+    }
+
+    // Buy button for Item 1
+    windowDef Item1_Btn {
+        rect        400, 165, 72, 22
+        backcolor   0.15, 0.45, 0.15, 1
+        bordercolor 0.30, 0.80, 0.30, 1
+        bordersize  1
+        text        "BUY"
+        textscale   0.32
+        forecolor   1, 1, 1, 1
+        textalign   1
+        visible     1
+
+        onMouseEnter {
+            set "Item1_Btn::backcolor" "0.25 0.65 0.25 1" ;
+        }
+        onMouseExit {
+            set "Item1_Btn::backcolor" "0.15 0.45 0.15 1" ;
+        }
+        onAction {
+            cmd "hyrule_buy health_upgrade" ;
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    //  ITEM 2 – Speed Upgrade  (15 rupees)
+    // ════════════════════════════════════════════════════════════════════════
+    windowDef Item2_BG {
+        rect        140, 205, 360, 52
+        backcolor   0.10, 0.12, 0.22, 0.80
+        bordercolor 0.30, 0.50, 0.90, 0.70
+        bordersize  1
+        visible     1
+    }
+
+    windowDef Item2_Icon {
+        rect        148, 213, 36, 36
+        background  "guis/assets/hud/rupee_blue"
+        visible     1
+    }
+
+    windowDef Item2_Label {
+        rect        192, 208, 200, 22
+        text        "Speed Upgrade"
+        textscale   0.38
+        forecolor   0.60, 0.80, 1.0, 1
+        visible     1
+    }
+
+    windowDef Item2_Desc {
+        rect        192, 228, 200, 18
+        text        "Increase run speed by 10%"
+        textscale   0.28
+        forecolor   0.75, 0.75, 0.75, 1
+        visible     1
+    }
+
+    windowDef Item2_Price {
+        rect        390, 213, 90, 22
+        text        "15 rupees"
+        textscale   0.32
+        forecolor   0.82, 0.70, 0.10, 1
+        textalign   2
+        visible     1
+    }
+
+    windowDef Item2_Btn {
+        rect        400, 230, 72, 22
+        backcolor   0.10, 0.20, 0.50, 1
+        bordercolor 0.30, 0.50, 0.90, 1
+        bordersize  1
+        text        "BUY"
+        textscale   0.32
+        forecolor   1, 1, 1, 1
+        textalign   1
+        visible     1
+
+        onMouseEnter {
+            set "Item2_Btn::backcolor" "0.20 0.35 0.75 1" ;
+        }
+        onMouseExit {
+            set "Item2_Btn::backcolor" "0.10 0.20 0.50 1" ;
+        }
+        onAction {
+            cmd "hyrule_buy speed_upgrade" ;
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    //  ITEM 3 – Ammo Refill  (5 rupees)
+    // ════════════════════════════════════════════════════════════════════════
+    windowDef Item3_BG {
+        rect        140, 270, 360, 52
+        backcolor   0.22, 0.10, 0.10, 0.80
+        bordercolor 0.90, 0.30, 0.30, 0.70
+        bordersize  1
+        visible     1
+    }
+
+    windowDef Item3_Icon {
+        rect        148, 278, 36, 36
+        background  "guis/assets/hud/rupee_red"
+        visible     1
+    }
+
+    windowDef Item3_Label {
+        rect        192, 273, 200, 22
+        text        "Ammo Refill"
+        textscale   0.38
+        forecolor   1.0, 0.60, 0.60, 1
+        visible     1
+    }
+
+    windowDef Item3_Desc {
+        rect        192, 293, 200, 18
+        text        "Refill all weapons & arrows"
+        textscale   0.28
+        forecolor   0.75, 0.75, 0.75, 1
+        visible     1
+    }
+
+    windowDef Item3_Price {
+        rect        390, 278, 90, 22
+        text        "5 rupees"
+        textscale   0.32
+        forecolor   0.82, 0.70, 0.10, 1
+        textalign   2
+        visible     1
+    }
+
+    windowDef Item3_Btn {
+        rect        400, 295, 72, 22
+        backcolor   0.50, 0.10, 0.10, 1
+        bordercolor 0.90, 0.30, 0.30, 1
+        bordersize  1
+        text        "BUY"
+        textscale   0.32
+        forecolor   1, 1, 1, 1
+        textalign   1
+        visible     1
+
+        onMouseEnter {
+            set "Item3_Btn::backcolor" "0.75 0.20 0.20 1" ;
+        }
+        onMouseExit {
+            set "Item3_Btn::backcolor" "0.50 0.10 0.10 1" ;
+        }
+        onAction {
+            cmd "hyrule_buy ammo_refill" ;
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    //  CLOSE button
+    // ════════════════════════════════════════════════════════════════════════
+    windowDef CloseBtn {
+        rect        245, 340, 150, 30
+        backcolor   0.20, 0.16, 0.04, 1
+        bordercolor 0.82, 0.70, 0.10, 1
+        bordersize  1
+        text        "CLOSE  [ ESC ]"
+        textscale   0.35
+        forecolor   0.82, 0.70, 0.10, 1
+        textalign   1
+        visible     1
+
+        onMouseEnter {
+            set "CloseBtn::backcolor" "0.40 0.32 0.08 1" ;
+        }
+        onMouseExit {
+            set "CloseBtn::backcolor" "0.20 0.16 0.04 1" ;
+        }
+        onAction {
+            cmd "close" ;
+        }
+    }
+
+    // ── ESC key also closes ─────────────────────────────────────────────────
+    onEsc {
+        cmd "close" ;
+    }
+}
