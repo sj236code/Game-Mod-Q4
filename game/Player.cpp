@@ -6623,9 +6623,13 @@ bool idPlayer::HandleSingleGuiCommand( idEntity *entityGui, idLexer *src ) {
 				inventory.rupees -= COST;
 				inventory.maxHealth += 25;
 				if (inventory.maxHealth > 400) { inventory.maxHealth = 400; }
-				gameLocal.Printf("HYRULE STORE: Health Upgrade! maxHealth=%d, rupees=%d\n", inventory.maxHealth, inventory.rupees);
+				gameLocal.Printf("HYRULE STORE: Health Upgrade! maxHealth=%d, health=%d, rupees=%d\n", inventory.maxHealth, health, inventory.rupees);
+				health = idMath::ClampInt(1, inventory.maxHealth, health + 25);
 				if (hud) {
 					hud->SetStateInt("player_rupees", inventory.rupees);
+					hud->SetStateInt("player_health", health);
+					hud->SetStateFloat("player_healthpct", idMath::ClampFloat(0.0f, 1.0f, (float)health / (float)inventory.maxHealth));
+					hud->HandleNamedEvent("updateHealth");
 					hud->SetStateString("itemPickupText", "Max Health +25!");
 					hud->HandleNamedEvent("itemPickup");
 				}
@@ -8571,8 +8575,13 @@ void idPlayer::HyruleBuyItem(const char* itemName) {
 			inventory.rupees -= COST;
 			inventory.maxHealth += 25;
 			if (inventory.maxHealth > 400) { inventory.maxHealth = 400; }
+			health = idMath::ClampInt(1, inventory.maxHealth, health + 25);
+			gameLocal.Printf("health after upgrade: %d\n", health);
 			if (hud) {
 				hud->SetStateInt("player_rupees", inventory.rupees);
+				hud->SetStateInt("player_health", health);
+				hud->SetStateFloat("player_healthpct", idMath::ClampFloat(0.0f, 1.0f, (float)health / (float)inventory.maxHealth));
+				hud->HandleNamedEvent("updateHealth");
 				hud->SetStateString("itemPickupText", "Max Health +25!");
 				hud->HandleNamedEvent("itemPickup");
 			}
