@@ -351,6 +351,8 @@ public:
 	int						guiY;
 	int						storeSelection;
 	void					HyruleBuyItem(const char* itemName);
+	bool					helpScreenOpen;
+	idUserInterface* helpSystem;
 	bool					objectiveButtonReleased;
 	bool					disableHud;
 	bool					showNewObjectives;

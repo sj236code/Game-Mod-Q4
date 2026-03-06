@@ -62,16 +62,16 @@ If the build supports it, select "Hyrule" from the mod menu.
 
 ## Feature checklist (for grading)
 
-- [ ] README with instructions on how to play and see all new features (this file)
-- [ ] Shortcut that automatically launches the mod (Launch Hyrule Mod.bat)
-- [ ] Custom assets in pak001.pak (def files, guis, etc.)
+- [X] README with instructions on how to play and see all new features (this file)
+- [X] Shortcut that automatically launches the mod (Launch Hyrule Mod.bat)
+- [X] Custom assets in pak001.pak (def files, guis, etc.)
 - [ ] In-game help screen explaining the mod
-- [ ] Custom UI (HUD and/or menus) for the mod’s features
+- [X] Custom UI (HUD and/or menus) for the mod’s features
 - [ ] Quake weapons replaced with Zelda-themed weapons
-- [ ] Upgradable weapons, health, and speed
+- [X] Upgradable weapons, health, and speed
 - [ ] 5 monsters rethemed as Zelda beasts with different weaknesses
 - [ ] 5 findable items in the map
-- [ ] In-game store (trade rupees)
+- [X] In-game store (trade rupees)
 
 ---
 

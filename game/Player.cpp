@@ -1857,6 +1857,9 @@ void idPlayer::Spawn( void ) {
 		// load HUD
 		hud = NULL;
 		mphud = NULL;
+
+		helpScreenOpen = false;
+		helpSystem = NULL;
  		
 		overlayHud = NULL;
 		overlayHudTime = 0;
@@ -3374,7 +3377,7 @@ void idPlayer::UpdateHudAmmo( idUserInterface *_hud ) {
 
 	inclip		= weapon->AmmoInClip();
 	ammoamount	= weapon->AmmoAvailable();
-	gameLocal.Printf("ammo: inclip=%d ammoamount=%d clipsize=%d\n", inclip, ammoamount, weapon->ClipSize());
+	//gameLocal.Printf("ammo: inclip=%d ammoamount=%d clipsize=%d\n", inclip, ammoamount, weapon->ClipSize());
 
 	if (ammoamount < 0) {
 		// show infinite ammo
@@ -6067,6 +6070,10 @@ idUserInterface* idPlayer::ActiveGui(void) {
 
 	if (storeSystemOpen && objectiveSystem) {
 		return objectiveSystem;
+	}
+
+	if (helpScreenOpen && helpSystem) {
+		return helpSystem;
 	}
 
 	return focusUI;
@@ -8865,6 +8872,37 @@ void idPlayer::PerformImpulse( int impulse ) {
 				objectiveSystem->Activate(false, gameLocal.time);
 				objectiveSystemOpen = false;
 				storeSystemOpen = false;
+				objectiveSystem = NULL;
+#ifdef _XENON
+				g_ObjectiveSystemOpen = false;
+#endif
+			}
+			break;
+		}
+		case 58: {
+			if (entityNumber != gameLocal.localClientNum) {
+				break;
+			}
+			if (!helpScreenOpen) {
+				if (!helpSystem) {
+					helpSystem = uiManager->FindGui("guis/help.gui", true, false, true);
+				}
+				if (helpSystem) {
+					helpSystem->Activate(true, gameLocal.time);
+					helpSystem->SetStateBool("gui_showCursor", true);
+					helpSystem->StateChanged(gameLocal.time);
+					objectiveSystem = helpSystem;
+					objectiveSystemOpen = true;
+					helpScreenOpen = true;
+#ifdef _XENON
+					g_ObjectiveSystemOpen = true;
+#endif
+				}
+			}
+			else {
+				helpSystem->Activate(false, gameLocal.time);
+				objectiveSystemOpen = false;
+				helpScreenOpen = false;
 				objectiveSystem = NULL;
 #ifdef _XENON
 				g_ObjectiveSystemOpen = false;

@@ -1,0 +1,287 @@
+windowDef Desktop
+{
+	rect		0, 0, 640, 480
+	visible		1
+	nocursor	0
+	menugui		0
+
+	// Dark overlay background
+	windowDef bg
+	{
+		rect		0, 0, 640, 480
+		backcolor	0, 0, 0, 0.88
+		visible		1
+	}
+
+	// Decorative top border line
+	windowDef border_top
+	{
+		rect		30, 44, 580, 2
+		backcolor	0.82, 0.70, 0.10, 0.8
+		visible		1
+	}
+
+	// Decorative bottom border line
+	windowDef border_bottom
+	{
+		rect		30, 434, 580, 2
+		backcolor	0.82, 0.70, 0.10, 0.8
+		visible		1
+	}
+
+	// Title
+	windowDef title
+	{
+		rect		0, 10, 640, 32
+		visible		1
+		forecolor	0.98, 0.88, 0.20, 1
+		textscale	0.55
+		font		"fonts/marine"
+		textalign	1
+		textstyle	1
+		text		"HYRULE MOD  –  HELP"
+	}
+
+	// Subtitle
+	windowDef subtitle
+	{
+		rect		0, 38, 640, 14
+		visible		1
+		forecolor	0.70, 0.85, 1.0, 0.75
+		textscale	0.22
+		font		"fonts/marine"
+		textalign	1
+		text		"A Zelda / Breath of the Wild reskin for Quake 4"
+	}
+
+	//----------------------------------------------------
+	// SECTION 1 – Zelda Weapons
+	//----------------------------------------------------
+	windowDef sec1_icon
+	{
+		rect		40, 58, 8, 8
+		backcolor	0.98, 0.88, 0.20, 1
+		visible		1
+	}
+	windowDef sec1_heading
+	{
+		rect		54, 52, 560, 18
+		visible		1
+		forecolor	0.98, 0.88, 0.20, 1
+		textscale	0.30
+		font		"fonts/marine"
+		textstyle	1
+		text		"ZELDA WEAPONS"
+	}
+	windowDef sec1_body
+	{
+		rect		54, 68, 550, 40
+		visible		1
+		forecolor	0.86, 0.92, 0.76, 0.9
+		textscale	0.22
+		font		"fonts/marine"
+		text		"All Quake 4 weapons have been replaced with Zelda-themed equivalents. Master Sword, Traveler's Bow, Soldier's Bow, Guardian Bow, Ancient Bow, Remote Bomb, Fire Rod, Thunderblade, and Lizal Boomerang. Use the weapon switch keys to cycle between them."
+	}
+
+	windowDef div1
+	{
+		rect		54, 108, 556, 1
+		backcolor	0.82, 0.70, 0.10, 0.35
+		visible		1
+	}
+
+	//----------------------------------------------------
+	// SECTION 2 – Upgrades
+	//----------------------------------------------------
+	windowDef sec2_icon
+	{
+		rect		40, 118, 8, 8
+		backcolor	0.98, 0.88, 0.20, 1
+		visible		1
+	}
+	windowDef sec2_heading
+	{
+		rect		54, 112, 560, 18
+		visible		1
+		forecolor	0.98, 0.88, 0.20, 1
+		textscale	0.30
+		font		"fonts/marine"
+		textstyle	1
+		text		"UPGRADES"
+	}
+	windowDef sec2_body
+	{
+		rect		54, 128, 550, 40
+		visible		1
+		forecolor	0.86, 0.92, 0.76, 0.9
+		textscale	0.22
+		font		"fonts/marine"
+		text		"Open the in-game store to spend rupees on upgrades. Health Upgrade (+25 max HP, costs 10 rupees), Speed Upgrade (+10% run speed, costs 15 rupees), and Ammo Refill (refills all ammo, costs 5 rupees). Upgrades stack – buy multiple times."
+	}
+
+	windowDef div2
+	{
+		rect		54, 168, 556, 1
+		backcolor	0.82, 0.70, 0.10, 0.35
+		visible		1
+	}
+
+	//----------------------------------------------------
+	// SECTION 3 – Zelda Beasts
+	//----------------------------------------------------
+	windowDef sec3_icon
+	{
+		rect		40, 178, 8, 8
+		backcolor	0.98, 0.88, 0.20, 1
+		visible		1
+	}
+	windowDef sec3_heading
+	{
+		rect		54, 172, 560, 18
+		visible		1
+		forecolor	0.98, 0.88, 0.20, 1
+		textscale	0.30
+		font		"fonts/marine"
+		textstyle	1
+		text		"ZELDA BEASTS"
+	}
+	windowDef sec3_body
+	{
+		rect		54, 188, 550, 40
+		visible		1
+		forecolor	0.86, 0.92, 0.76, 0.9
+		textscale	0.22
+		font		"fonts/marine"
+		text		"Five Quake 4 monsters have been rethemed as Zelda creatures. Each beast has a different elemental weakness. Hit them with the matching weapon type for bonus damage. Experiment with your weapons to find what works best against each enemy."
+	}
+
+	windowDef div3
+	{
+		rect		54, 228, 556, 1
+		backcolor	0.82, 0.70, 0.10, 0.35
+		visible		1
+	}
+
+	//----------------------------------------------------
+	// SECTION 4 – Findable Items
+	//----------------------------------------------------
+	windowDef sec4_icon
+	{
+		rect		40, 238, 8, 8
+		backcolor	0.98, 0.88, 0.20, 1
+		visible		1
+	}
+	windowDef sec4_heading
+	{
+		rect		54, 232, 560, 18
+		visible		1
+		forecolor	0.98, 0.88, 0.20, 1
+		textscale	0.30
+		font		"fonts/marine"
+		textstyle	1
+		text		"FINDABLE ITEMS"
+	}
+	windowDef sec4_body
+	{
+		rect		54, 248, 550, 40
+		visible		1
+		forecolor	0.86, 0.92, 0.76, 0.9
+		textscale	0.22
+		font		"fonts/marine"
+		text		"Five unique items are hidden throughout the map. Explore every corner to find them all. Items include Heart Pieces, Korok Seeds, and Rupee caches. Picking up rupees adds them to your wallet so you can spend them at the store."
+	}
+
+	windowDef div4
+	{
+		rect		54, 288, 556, 1
+		backcolor	0.82, 0.70, 0.10, 0.35
+		visible		1
+	}
+
+	//----------------------------------------------------
+	// SECTION 5 – Rupee Store
+	//----------------------------------------------------
+	windowDef sec5_icon
+	{
+		rect		40, 298, 8, 8
+		backcolor	0.98, 0.88, 0.20, 1
+		visible		1
+	}
+	windowDef sec5_heading
+	{
+		rect		54, 292, 560, 18
+		visible		1
+		forecolor	0.98, 0.88, 0.20, 1
+		textscale	0.30
+		font		"fonts/marine"
+		textstyle	1
+		text		"RUPEE STORE"
+	}
+	windowDef sec5_body
+	{
+		rect		54, 308, 550, 40
+		visible		1
+		forecolor	0.86, 0.92, 0.76, 0.9
+		textscale	0.22
+		font		"fonts/marine"
+		text		"Collect rupees by picking up Green (1), Blue (5), and Red (20) rupee items in the level. Press the store key to open the shop. Your current rupee count is always shown in the top-right of the HUD. Spend wisely!"
+	}
+
+	windowDef div5
+	{
+		rect		54, 348, 556, 1
+		backcolor	0.82, 0.70, 0.10, 0.35
+		visible		1
+	}
+
+	//----------------------------------------------------
+	// Controls reminder
+	//----------------------------------------------------
+	windowDef controls_heading
+	{
+		rect		54, 352, 560, 16
+		visible		1
+		forecolor	0.70, 0.85, 1.0, 1
+		textscale	0.26
+		font		"fonts/marine"
+		textstyle	1
+		text		"CONTROLS"
+	}
+	windowDef controls_body
+	{
+		rect		54, 368, 550, 30
+		visible		1
+		forecolor	0.86, 0.92, 0.76, 0.85
+		textscale	0.22
+		font		"fonts/marine"
+		text		"Open Store: [ F3 ]          Close Store / Help: [ F3 / ESC ]          Cycle Weapons: [ Mouse Wheel ]"
+	}
+
+	//----------------------------------------------------
+	// Close button
+	//----------------------------------------------------
+	windowDef close_btn
+	{
+		rect		245, 408, 150, 26
+		visible		1
+		backcolor	0.10, 0.10, 0.10, 0.85
+		forecolor	0.98, 0.88, 0.20, 1
+		textscale	0.28
+		font		"fonts/marine"
+		textalign	1
+		textstyle	1
+		text		"[ CLOSE HELP ]"
+
+		onMouseEnter {
+			set "backcolor" "0.20, 0.16, 0.02, 0.95" ;
+			set "forecolor" "1, 1, 0.5, 1" ;
+		}
+		onMouseExit {
+			set "backcolor" "0.10, 0.10, 0.10, 0.85" ;
+			set "forecolor" "0.98, 0.88, 0.20, 1" ;
+		}
+		onAction {
+			set "cmd" "close" ;
+		}
+	}
+}
