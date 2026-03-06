@@ -155,7 +155,7 @@ windowDef Desktop {
             set "Item1_Btn::backcolor" "0.15 0.45 0.15 1" ;
         }
         onAction {
-            cmd "hyrule_buy health_upgrade" ;
+            set "cmd" "hyrule_buy health_upgrade" ;
         }
     }
 
@@ -219,7 +219,7 @@ windowDef Desktop {
             set "Item2_Btn::backcolor" "0.10 0.20 0.50 1" ;
         }
         onAction {
-            cmd "hyrule_buy speed_upgrade" ;
+            set "cmd" "hyrule_buy speed_upgrade" ;
         }
     }
 
@@ -283,7 +283,7 @@ windowDef Desktop {
             set "Item3_Btn::backcolor" "0.50 0.10 0.10 1" ;
         }
         onAction {
-            cmd "hyrule_buy ammo_refill" ;
+            set "cmd" "hyrule_buy ammo_refill" ;
         }
     }
 

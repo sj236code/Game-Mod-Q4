@@ -346,6 +346,9 @@ public:
 	idUserInterface *		cinematicHud;
 	bool					objectiveSystemOpen;
 	bool					storeSystemOpen;
+	idUserInterface*		storeGui;
+	int						guiX;
+	int						guiY;
 	int						storeSelection;
 	void					HyruleBuyItem(const char* itemName);
 	bool					objectiveButtonReleased;

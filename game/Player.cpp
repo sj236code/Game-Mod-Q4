@@ -1123,6 +1123,8 @@ idPlayer::idPlayer() {
 	objectiveSystem			= NULL;
 	objectiveSystemOpen		= false;
 	storeSystemOpen         = false;
+	guiX = 320;
+	guiY = 240;
 	showNewObjectives		= false;
 #ifdef _XENON
 	g_ObjectiveSystemOpen	= false;
@@ -6049,8 +6051,8 @@ idPlayer::ActiveGui
 ===============
 */
 idUserInterface* idPlayer::ActiveGui(void) {
-	gameLocal.Printf("ActiveGui: storeSystemOpen=%d objectiveSystem=%p focusUI=%p\n",
-		storeSystemOpen ? 1 : 0, objectiveSystem, focusUI);
+	//gameLocal.Printf("ActiveGui: storeSystemOpen=%d objectiveSystem=%p focusUI=%p\n",
+		//storeSystemOpen ? 1 : 0, objectiveSystem, focusUI);
 
 #ifdef _XENON
 	if (objectiveSystemOpen) {
@@ -6274,6 +6276,8 @@ idPlayer::Weapon_GUI
 void idPlayer::Weapon_GUI( void ) {
 
 	flagCanFire = false;
+	//gameLocal.Printf("Weapon_GUI: isClient=%d\n", gameLocal.isClient ? 1 : 0);
+
 
 	if ( !objectiveSystemOpen ) {
 		if ( idealWeapon != currentWeapon ) {
@@ -6294,10 +6298,17 @@ void idPlayer::Weapon_GUI( void ) {
 		bool updateVisuals = false;
 
 		idUserInterface *ui = ActiveGui();
-		if ( ui ) {
- 			ev = sys->GenerateMouseButtonEvent( 1, ( usercmd.buttons & BUTTON_ATTACK ) != 0 );
-			command = ui->HandleEvent( &ev, gameLocal.time, &updateVisuals );
-			if ( updateVisuals && focusEnt && ui == focusUI ) {
+		//gameLocal.Printf("Weapon_GUI click: ui=%p storeOpen=%d\n", ui, storeSystemOpen ? 1 : 0);
+
+		if (ui) {
+			if (storeSystemOpen) {
+				//gameLocal.Printf("SetCursor: guiX=%d guiY=%d\n", guiX, guiY);
+				ui->SetCursor(guiX, guiY);
+			}
+			ev = sys->GenerateMouseButtonEvent(1, (usercmd.buttons & BUTTON_ATTACK) != 0);
+			command = ui->HandleEvent(&ev, gameLocal.time, &updateVisuals);
+			//gameLocal.Printf("Weapon_GUI command='%s'\n", command ? command : "NULL");
+			if (updateVisuals && focusEnt && ui == focusUI) {
 				focusEnt->UpdateVisuals();
 			}
 		}
@@ -7895,11 +7906,10 @@ void idPlayer::UpdateViewAngles( void ) {
 
 	// Hyrule Mod: freeze view while store is open
 	if (storeSystemOpen) {
-		gameLocal.Printf("*** STORE OPEN - FREEZING VIEW ***\n");
 		UpdateDeltaViewAngles(viewAngles);
 		return;
 	}
-	gameLocal.Printf("UpdateViewAngles: storeSystemOpen=%d\n", storeSystemOpen ? 1 : 0);
+	//gameLocal.Printf("UpdateViewAngles: storeSystemOpen=%d\n", storeSystemOpen ? 1 : 0);
 
 	// circularly clamp the angles with deltas
 //	if( gameLocal.localClientNum == entityNumber ) {
@@ -9743,6 +9753,15 @@ void idPlayer::Think( void ) {
 
 	EvaluateControls();
 
+	// Hyrule Mod: Poll store GUI for commands each frame
+	if (storeSystemOpen && objectiveSystem) {
+		const char* cmd = objectiveSystem->GetStateString("cmd");
+		if (cmd && cmd[0]) {
+			//gameLocal.Printf("store poll cmd='%s'\n", cmd);
+			HandleGuiCommands(this, cmd);
+			objectiveSystem->SetStateString("cmd", "");
+		}
+	}
 
 // RAVEN BEGIN
 // abahr
@@ -9897,15 +9916,35 @@ void idPlayer::Think( void ) {
 idPlayer::RouteGuiMouse
 =================
 */
-void idPlayer::RouteGuiMouse( idUserInterface *gui ) {
- 	sysEvent_t ev;
- 	const char *command;
+void idPlayer::RouteGuiMouse(idUserInterface* gui) {
+	sysEvent_t ev;
+	const char* command;
 
-	if ( usercmd.mx != oldMouseX || usercmd.my != oldMouseY ) {
- 		ev = sys->GenerateMouseMoveEvent( usercmd.mx - oldMouseX, usercmd.my - oldMouseY );
- 		command = gui->HandleEvent( &ev, gameLocal.time );
+	int dx = usercmd.mx - oldMouseX;
+	int dy = usercmd.my - oldMouseY;
+
+	if (dx || dy) {
+		// Scale from screen resolution to GUI space (640x480)
+		float scaleX = 640.0f / renderSystem->GetScreenWidth();
+		float scaleY = 480.0f / renderSystem->GetScreenHeight();
+		guiX += (int)(dx * scaleX);
+		guiY += (int)(dy * scaleY);
+		guiX = idMath::ClampInt(0, 640, guiX);
+		guiY = idMath::ClampInt(0, 480, guiY);
+
+		ev = sys->GenerateMouseMoveEvent(dx, dy);
+		command = gui->HandleEvent(&ev, gameLocal.time);
+		if (command && command[0]) {
+			HandleGuiCommands(this, command);
+		}
 		oldMouseX = usercmd.mx;
 		oldMouseY = usercmd.my;
+	}
+
+	// Keep cursor position synced every frame
+	if (storeSystemOpen) {
+		gui->SetCursor(guiX, guiY);
+		//gameLocal.Printf("cursor: %d, %d\n", guiX, guiY);
 	}
 }
 
