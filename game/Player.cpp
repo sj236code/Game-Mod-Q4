@@ -3374,12 +3374,14 @@ void idPlayer::UpdateHudAmmo( idUserInterface *_hud ) {
 
 	inclip		= weapon->AmmoInClip();
 	ammoamount	= weapon->AmmoAvailable();
+	gameLocal.Printf("ammo: inclip=%d ammoamount=%d clipsize=%d\n", inclip, ammoamount, weapon->ClipSize());
 
-	if ( ammoamount < 0 ) {
+	if (ammoamount < 0) {
 		// show infinite ammo
-		_hud->SetStateString( "player_ammo", "-1" );
-		_hud->SetStateString( "player_totalammo", "-1" );
-		_hud->SetStateFloat ( "player_ammopct", 1.0f );
+		_hud->SetStateString("player_ammo", "--");
+		_hud->SetStateString("player_totalammo", "99");
+		_hud->SetStateFloat("player_ammopct", 1.0f);
+		_hud->SetStateInt("player_clip_size", 1);
 	} else if ( weapon->ClipSize ( ) && !gameLocal.isMultiplayer ) {
 		_hud->SetStateInt ( "player_clip_size", weapon->ClipSize() );
 		_hud->SetStateFloat ( "player_ammopct", (float)inclip / (float)weapon->ClipSize ( ) );

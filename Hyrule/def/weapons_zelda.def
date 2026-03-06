@@ -1,0 +1,101 @@
+// Hyrule mod – Zelda-themed weapon defs
+// These inherit from the stock Quake 4 weapons but change names so they can be
+// treated as Zelda weapons in player defs and maps.
+
+// Master Sword – baseline melee / sidearm
+entityDef weapon_master_sword {
+	"inherit"           "weapon_gauntlet"
+
+	"inv_name"          "Master Sword"
+	"name"              "Master Sword"
+}
+
+// Soldier's Bow – mid‑tier bow (shotgun stand‑in)
+entityDef weapon_soldiers_bow {
+	"inherit"           "weapon_shotgun"
+
+	"inv_name"          "Soldier's Bow"
+	"name"              "Soldier's Bow"
+	// "model_view"     "models/weapons/hyrule/soldiers_bow_view.lwo"
+	// "model_world"    "models/weapons/hyrule/soldiers_bow_world.lwo"
+}
+
+// Traveler's Bow – basic rapid‑fire bow (machinegun stand‑in)
+entityDef weapon_travelers_bow {
+	"inherit"           "weapon_machinegun"
+
+	"inv_name"          "Traveler's Bow"
+	"name"              "Traveler's Bow"
+	// "model_view"     "models/weapons/hyrule/travelers_bow_view.lwo"
+	// "model_world"    "models/weapons/hyrule/travelers_bow_world.lwo"
+}
+
+// Guardian Bow – high‑tech bow (hyperblaster stand‑in)
+entityDef weapon_guardian_bow {
+	"inherit"           "weapon_hyperblaster"
+
+	"inv_name"          "Guardian Bow"
+	"name"              "Guardian Bow"
+	// "model_view"     "models/weapons/hyrule/guardian_bow_view.lwo"
+	// "model_world"    "models/weapons/hyrule/guardian_bow_world.lwo"
+}
+
+// Remote Bomb Rune – explosive rune (rocket launcher stand‑in)
+entityDef weapon_remote_bomb {
+	"inherit"           "weapon_rocketlauncher"
+
+	"inv_name"          "Remote Bomb"
+	"name"              "Remote Bomb"
+	// "model_view"     "models/weapons/hyrule/remote_bomb_view.lwo"
+	// "model_world"    "models/weapons/hyrule/remote_bomb_world.lwo"
+}
+
+// Fire Rod – fire‑based magic / weapon (napalm gun stand‑in)
+entityDef weapon_fire_rod {
+	"inherit"           "weapon_napalmgun"
+
+	"inv_name"          "Fire Rod"
+	"name"              "Fire Rod"
+	// "model_view"     "models/weapons/hyrule/fire_rod_view.lwo"
+	// "model_world"    "models/weapons/hyrule/fire_rod_world.lwo"
+}
+
+// Thunderblade – electric melee (lightning gun stand‑in)
+entityDef weapon_thunderblade {
+	"inherit"           "weapon_lightninggun"
+
+	"inv_name"          "Thunderblade"
+	"name"              "Thunderblade"
+	// "model_view"     "models/weapons/hyrule/thunderblade_view.lwo"
+	// "model_world"    "models/weapons/hyrule/thunderblade_world.lwo"
+}
+
+// Ancient Bow – very strong, precise bow (railgun stand‑in)
+entityDef weapon_ancient_bow {
+	"inherit"           "weapon_railgun"
+
+	"inv_name"          "Ancient Bow"
+	"name"              "Ancient Bow"
+	// "model_view"     "models/weapons/hyrule/ancient_bow_view.lwo"
+	// "model_world"    "models/weapons/hyrule/ancient_bow_world.lwo"
+}
+
+// Lizal Boomerang – arcing thrown weapon (grenade launcher stand‑in)
+entityDef weapon_lizal_boomerang {
+	"inherit"           "weapon_grenadelauncher"
+
+	"inv_name"          "Lizal Boomerang"
+	"name"              "Lizal Boomerang"
+	// "model_view"     "models/weapons/hyrule/lizal_boomerang_view.lwo"
+	// "model_world"    "models/weapons/hyrule/lizal_boomerang_world.lwo"
+}
+
+// Boko Club – simple melee (gauntlet stand‑in)
+entityDef weapon_boko_club {
+	"inherit"           "weapon_gauntlet"
+
+	"inv_name"          "Boko Club"
+	"name"              "Boko Club"
+	// "model_view"     "models/weapons/hyrule/boko_club_view.lwo"
+	// "model_world"    "models/weapons/hyrule/boko_club_world.lwo"
+}
