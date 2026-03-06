@@ -3450,6 +3450,9 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	// Rupee count
 	_hud->SetStateInt( "player_rupees", inventory.rupees );
 
+	// Speed
+	_hud->SetStateFloat("player_speed", pm_speed.GetFloat());
+
 	//_hud->HandleNamedEvent( "updateArmorHealthAir" );
 
 	if ( weapon ) {
