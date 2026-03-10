@@ -8,6 +8,11 @@ entityDef weapon_master_sword {
 
 	"inv_name"          "Master Sword"
 	"name"              "Master Sword"
+
+	// High damage to match the master swords power
+	"damage"			"80"
+	// Fast attach rate -> sword swings quickly
+	"fireRate" 			"0.3"
 }
 
 // Soldier's Bow – mid‑tier bow (shotgun stand‑in)
@@ -16,18 +21,36 @@ entityDef weapon_soldiers_bow {
 
 	"inv_name"          "Soldier's Bow"
 	"name"              "Soldier's Bow"
-	// "model_view"     "models/weapons/hyrule/soldiers_bow_view.lwo"
-	// "model_world"    "models/weapons/hyrule/soldiers_bow_world.lwo"
+
+	// Fires 1 arrow, not a spread of pellets
+	"numProjectiles"    "1"
+	// Tight spread to mimic arrows
+	"spread"			"0"
+	// Slightly higher damage than default machinegun per arrow
+	"damage"			"18"
+	// Moderate fire rate
+	"fireRate"			"0.12"
+
 }
 
 // Traveler's Bow – basic rapid‑fire bow (machinegun stand‑in)
 entityDef weapon_travelers_bow {
-	"inherit"           "weapon_machinegun"
+    "inherit"       "weapon_machinegun"
 
-	"inv_name"          "Traveler's Bow"
-	"name"              "Traveler's Bow"
-	// "model_view"     "models/weapons/hyrule/travelers_bow_view.lwo"
-	// "model_world"    "models/weapons/hyrule/travelers_bow_world.lwo"
+    "inv_name"      "Traveler's Bow"
+    "name"          "Traveler's Bow"
+
+    // slower than stock machinegun
+    "fireRate"      "0.9"
+
+    // if zoomed, also keep it slow
+    "altFireRate"   "0.9"
+
+    // normal firing spread
+    "spread"        "0"
+
+    // zoom firing spread
+    "spreadZoom"    "0"
 }
 
 // Guardian Bow – high‑tech bow (hyperblaster stand‑in)
@@ -36,8 +59,13 @@ entityDef weapon_guardian_bow {
 
 	"inv_name"          "Guardian Bow"
 	"name"              "Guardian Bow"
-	// "model_view"     "models/weapons/hyrule/guardian_bow_view.lwo"
-	// "model_world"    "models/weapons/hyrule/guardian_bow_world.lwo"
+
+	// Fast energy pulse fire
+	"fireRate"          "0.12"
+	// Moderate damage per shot
+	"damage"            "20"
+	// No spread -> precise guardian tech
+	"spread"            "0"
 }
 
 // Remote Bomb Rune – explosive rune (rocket launcher stand‑in)
@@ -46,8 +74,12 @@ entityDef weapon_remote_bomb {
 
 	"inv_name"          "Remote Bomb"
 	"name"              "Remote Bomb"
-	// "model_view"     "models/weapons/hyrule/remote_bomb_view.lwo"
-	// "model_world"    "models/weapons/hyrule/remote_bomb_world.lwo"
+
+	// Very slow fire rate -> placing a bomb takes time
+	"fireRate"          "2.0"
+	// High explosive damage
+	"damage"            "120"
+
 }
 
 // Fire Rod – fire‑based magic / weapon (napalm gun stand‑in)
@@ -56,8 +88,11 @@ entityDef weapon_fire_rod {
 
 	"inv_name"          "Fire Rod"
 	"name"              "Fire Rod"
-	// "model_view"     "models/weapons/hyrule/fire_rod_view.lwo"
-	// "model_world"    "models/weapons/hyrule/fire_rod_world.lwo"
+
+	// Moderate fire rate -> casting magic
+	"fireRate"          "0.8"
+	// Good fire damage
+	"damage"            "40"
 }
 
 // Thunderblade – electric melee (lightning gun stand‑in)
@@ -66,8 +101,12 @@ entityDef weapon_thunderblade {
 
 	"inv_name"          "Thunderblade"
 	"name"              "Thunderblade"
-	// "model_view"     "models/weapons/hyrule/thunderblade_view.lwo"
-	// "model_world"    "models/weapons/hyrule/thunderblade_world.lwo"
+
+	// High electric damage per tick
+	"damage"            "18"
+	// Slightly shorter beam range than default
+	"range"             "500"
+
 }
 
 // Ancient Bow – very strong, precise bow (railgun stand‑in)
@@ -76,8 +115,13 @@ entityDef weapon_ancient_bow {
 
 	"inv_name"          "Ancient Bow"
 	"name"              "Ancient Bow"
-	// "model_view"     "models/weapons/hyrule/ancient_bow_view.lwo"
-	// "model_world"    "models/weapons/hyrule/ancient_bow_world.lwo"
+	
+	// Very slow fire rate -> charging an ancient arrow
+	"fireRate"          "2.5"
+	// Massive damage -> ancient tech
+	"damage"            "200"
+	// No spread -> pinpoint accuracy
+	"spread"            "0"
 }
 
 // Lizal Boomerang – arcing thrown weapon (grenade launcher stand‑in)
@@ -86,8 +130,11 @@ entityDef weapon_lizal_boomerang {
 
 	"inv_name"          "Lizal Boomerang"
 	"name"              "Lizal Boomerang"
-	// "model_view"     "models/weapons/hyrule/lizal_boomerang_view.lwo"
-	// "model_world"    "models/weapons/hyrule/lizal_boomerang_world.lwo"
+
+	// Moderate fire rate -> throwing a boomerang
+	"fireRate"          "1.0"
+	// Moderate damage
+	"damage"            "60"
 }
 
 // Boko Club – simple melee (gauntlet stand‑in)
@@ -96,6 +143,21 @@ entityDef weapon_boko_club {
 
 	"inv_name"          "Boko Club"
 	"name"              "Boko Club"
-	// "model_view"     "models/weapons/hyrule/boko_club_view.lwo"
-	// "model_world"    "models/weapons/hyrule/boko_club_world.lwo"
+
+	// High damage but slower than Master Sword -> crude heavy club
+	"damage"            "60"
+	"fireRate"          "0.7"
+}
+
+entityDef player_marine
+{
+    "inherit"               "player_marine"
+    "def_weapon1"           "weapon_travelers_bow"
+    "def_weapon2"           "weapon_soldiers_bow"
+    "def_weapon3"           "weapon_guardian_bow"
+    "def_weapon4"           "weapon_lizal_boomerang"
+    "def_weapon6"           "weapon_remote_bomb"
+    "def_weapon7"           "weapon_ancient_bow"
+    "def_weapon8"           "weapon_thunderblade"
+    "weapon"                "weapon_master_sword"
 }

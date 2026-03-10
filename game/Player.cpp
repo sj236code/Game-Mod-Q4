@@ -1975,8 +1975,18 @@ void idPlayer::Spawn( void ) {
 			assert( spectating );
 		}
 	} else {
- 		SetupWeaponEntity( );
-		SpawnFromSpawnSpot( );
+		// Hyrule Mod: replace default weapons with Zelda weapons
+		spawnArgs.Set("def_weapon0", "weapon_master_sword");
+		spawnArgs.Set("def_weapon1", "weapon_travelers_bow");
+		spawnArgs.Set("def_weapon2", "weapon_soldiers_bow");
+		spawnArgs.Set("def_weapon3", "weapon_guardian_bow");
+		spawnArgs.Set("def_weapon4", "weapon_lizal_boomerang");
+		spawnArgs.Set("def_weapon6", "weapon_remote_bomb");
+		spawnArgs.Set("def_weapon7", "weapon_ancient_bow");
+		spawnArgs.Set("def_weapon8", "weapon_thunderblade");
+		spawnArgs.Set("weapon", "weapon_master_sword");
+		SetupWeaponEntity();
+		SpawnFromSpawnSpot();
 	}
 
 	// trigger playtesting item gives, if we didn't get here from a previous level

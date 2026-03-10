@@ -65,7 +65,7 @@ If the build supports it, select "Hyrule" from the mod menu.
 - [X] README with instructions on how to play and see all new features (this file)
 - [X] Shortcut that automatically launches the mod (Launch Hyrule Mod.bat)
 - [X] Custom assets in pak001.pak (def files, guis, etc.)
-- [ ] In-game help screen explaining the mod
+- [X] In-game help screen explaining the mod
 - [X] Custom UI (HUD and/or menus) for the mod’s features
 - [ ] Quake weapons replaced with Zelda-themed weapons
 - [X] Upgradable weapons, health, and speed
@@ -78,3 +78,18 @@ If the build supports it, select "Hyrule" from the mod menu.
 ## Mod folder name
 
 This README and the launch script use **Hyrule** as the mod folder name. If the folder has a different name, edit **Launch Hyrule Mod.bat** and change `fs_game Hyrule` to `fs_game [folder name]`.
+
+## Zelda Weapon Behavior Changes
+
+| Weapon | Based On | Changes Made | Zelda Feel |
+|--------|----------|--------------|------------|
+| **Master Sword** | Gauntlet (melee) | High damage (80), fast attack rate (0.3s) | Powerful, fast sword swings |
+| **Traveler's Bow** | Machinegun | Slow fire rate (0.9s), zero spread, single projectile | Drawing and loosing a single arrow |
+| **Soldier's Bow** | Shotgun | Single projectile, zero spread, higher damage (55), slow rate (1.2s) | Heavier bow, one powerful arrow per shot |
+| **Guardian Bow** | Hyperblaster | Fast fire rate (0.12s), zero spread, moderate damage (20) | Rapid ancient energy pulses |
+| **Remote Bomb** | Rocket Launcher | Very slow fire rate (2.0s), high damage (120) | Placing and detonating a bomb rune |
+| **Fire Rod** | Napalm Gun | Moderate fire rate (0.8s), fire damage (40) | Casting fire magic in bursts |
+| **Thunderblade** | Lightning Gun | Continuous electric beam, high damage per tick (18) | Electric sword channeling lightning |
+| **Ancient Bow** | Railgun | Very slow fire rate (2.5s), massive damage (200), zero spread | Charging and releasing a devastating ancient arrow |
+| **Lizal Boomerang** | Grenade Launcher | Arcing projectile, moderate damage (60), 1.0s fire rate | Throwing a returning boomerang |
+| **Boko Club** | Gauntlet (melee) | High damage (60), slower swing (0.7s) than Master Sword | Heavy, crude club with powerful but sluggish swings |

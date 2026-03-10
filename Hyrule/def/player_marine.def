@@ -1,13 +1,24 @@
 entityDef player_marine
 {
-    "inherit"                   "player_marine"
+    "inherit"               "player_marine"
+    "health"                "999"
 
-    "ammo_machinegun"           "150"
-    "ammo_shotgun"              "30"
-    "ammo_hyperblaster"         "200"
-    "ammo_rocketlauncher"       "20"
-    "ammo_grenadelauncher"      "25"
-    "ammo_lightninggun"         "200"
-    "ammo_railgun"              "25"
-    "ammo_nailgun"              "150"
+    "ammo_machinegun"       "150"
+    "ammo_shotgun"          "30"
+    "ammo_hyperblaster"     "200"
+    "ammo_rocketlauncher"   "20"
+    "ammo_grenadelauncher"  "25"
+    "ammo_lightninggun"     "200"
+    "ammo_railgun"          "25"
+    "ammo_nailgun"          "150"
+
+    "def_weapon0"           "weapon_master_sword"
+    "def_weapon1"           "weapon_travelers_bow"
+    "def_weapon2"           "weapon_soldiers_bow"
+    "def_weapon3"           "weapon_guardian_bow"
+    "def_weapon4"           "weapon_lizal_boomerang"
+    "def_weapon6"           "weapon_remote_bomb"
+    "def_weapon7"           "weapon_ancient_bow"
+    "def_weapon8"           "weapon_thunderblade"
+    "weapon"                "weapon_master_sword"
 }
