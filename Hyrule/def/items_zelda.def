@@ -1,0 +1,19 @@
+entityDef item_korok_seed
+{
+    "spawnclass"        "idItem"
+    "model"             "models/items/health_small.lwo"
+    "inv_korok_seed"    "1"
+    "inv_name"          "Korok Seed"
+    "noclipmodel"       "1"
+    "respawn"           "0"
+}
+
+entityDef item_stamina_vessel
+{
+    "spawnclass"        "idItem"
+    "model"             "models/items/health_small.lwo"
+    "inv_stamina_vessel" "1"
+    "inv_name"          "Stamina Vessel"
+    "noclipmodel"       "1"
+    "respawn"           "0"
+}

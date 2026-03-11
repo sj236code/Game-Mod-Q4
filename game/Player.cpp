@@ -854,6 +854,24 @@ bool idInventory::Give( idPlayer *owner, const idDict &spawnArgs, const char *st
 		return true;
 	}
 
+	// Korok Seed pickup - increases jump height
+	if (!idStr::Icmp(statname, "korok_seed")) {
+		if (checkOnly) { return true; }
+		extern idCVar pm_jumpheight;
+		pm_jumpheight.SetFloat(pm_jumpheight.GetFloat() * 1.15f);
+		gameLocal.Printf("KOROK SEED: jump height now %.1f\n", pm_jumpheight.GetFloat());
+		return true;
+	}
+
+	// Stamina Vessel pickup - increases speed
+	if (!idStr::Icmp(statname, "stamina_vessel")) {
+		if (checkOnly) { return true; }
+		extern idCVar pm_speed;
+		pm_speed.SetFloat(pm_speed.GetFloat() * 1.10f);
+		gameLocal.Printf("STAMINA VESSEL: speed now %.1f\n", pm_speed.GetFloat());
+		return true;
+	}
+
 	if ( !idStr::Icmpn( statname, "ammo_", 5 ) ) {
 		i = AmmoIndexForAmmoClass( statname );
 		max = MaxAmmoForAmmoClass( owner, statname );
