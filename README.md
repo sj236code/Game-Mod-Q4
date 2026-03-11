@@ -69,7 +69,7 @@ If the build supports it, select "Hyrule" from the mod menu.
 - [X] Custom UI (HUD and/or menus) for the mod’s features
 - [X] Quake weapons replaced with Zelda-themed weapons
 - [X] Upgradable weapons, health, and speed
-- [ ] 5 monsters rethemed as Zelda beasts with different weaknesses
+- [X] 5 monsters rethemed as Zelda beasts with different weaknesses
 - [ ] 5 findable items in the map
 - [X] In-game store (trade rupees)
 

@@ -1,0 +1,200 @@
+// Hyrule mod – Zelda-themed monster defs
+// These inherit from stock Quake 4 monsters and override stats to mimic
+// the 5 Divine Beasts / Ganon from Breath of the Wild.
+//
+// WEAKNESS SYSTEM:
+// Each beast has a "hyrule_weakness" key indicating which Zelda weapon
+// deals bonus damage. This is read by the C++ damage system.
+//
+// Beast -> Base Monster mapping:
+//   Vah Naboris  -> monster_strogg_marine       (fast agile soldier)
+//   Vah Medoh    -> monster_strogg_marine_mgun  (ranged attacker)
+//   Vah Rudania  -> monster_grunt               (tough tanky brawler)
+//   Vah Ruta     -> monster_berserker           (slow, devastating melee)
+//   Calamity Ganon -> monster_harvester         (mega boss)
+
+// =============================================================================
+//
+//  VAH NABORIS – Divine Beast of Lightning
+//  Based on: monster_strogg_marine (blaster)
+//  Weakness: Ancient Bow
+//  Lore: A camel-shaped Divine Beast from the Gerudo Desert that generates
+//        powerful lightning storms. Fast and aggressive.
+//
+// =============================================================================
+
+entityDef monster_vah_naboris
+{
+	"inherit"                           "monster_strogg_marine"
+
+	"name"                              "Vah Naboris"
+	"inv_name"                          "Vah Naboris"
+
+	// Weakness: Ancient Bow deals bonus damage
+	"hyrule_weakness"                   "weapon_ancient_bow"
+
+	// Higher health than base strogg marine (base: 80)
+	"health"                            "350"
+
+	// More aggressive attack range
+	"attackRange"                       "200 900"
+	"aggressiveRange"                   "400"
+
+	// Faster movement -> lightning beast is quick
+	"run_speed"                         "220"
+	"walk_speed"                        "100"
+
+	// Hits harder per shot
+	"def_attack_base"                   "projectile_strogg_marine_blaster"
+	"attack_base_accuracy"              "3"
+
+	// More pain resistant
+	"painThreshold"                     "40"
+}
+
+// =============================================================================
+//
+//  VAH MEDOH – Divine Beast of Wind
+//  Based on: monster_strogg_marine_mgun (machinegun)
+//  Weakness: Traveler's Bow
+//  Lore: A bird-shaped Divine Beast from the Rito region that soars above
+//        Hebra Mountain. Rapid ranged attacker.
+//
+// =============================================================================
+
+entityDef monster_vah_medoh
+{
+	"inherit"                           "monster_strogg_marine_mgun"
+
+	"name"                              "Vah Medoh"
+	"inv_name"                          "Vah Medoh"
+
+	// Weakness: Traveler's Bow deals bonus damage
+	"hyrule_weakness"                   "weapon_travelers_bow"
+
+	// Higher health than base mgun marine (base: 80)
+	"health"                            "300"
+
+	// Long ranged attacker -> wind beast attacks from distance
+	"attackRange"                       "500 1200"
+	"aggressiveRange"                   "600"
+	"action_rangedAttack_maxRange"      "1200"
+
+	// Rapid fire burst -> wind blasts
+	"minShots"                          "8"
+	"maxShots"                          "30"
+
+	// More pain resistant
+	"painThreshold"                     "30"
+}
+
+// =============================================================================
+//
+//  VAH RUDANIA – Divine Beast of Fire
+//  Based on: monster_grunt
+//  Weakness: Remote Bomb
+//  Lore: A lizard-shaped Divine Beast from Death Mountain controlled by
+//        Fireblight Ganon. Extremely tough, high health tank.
+//
+// =============================================================================
+
+entityDef monster_vah_rudania
+{
+	"inherit"                           "monster_grunt"
+
+	"name"                              "Vah Rudania"
+	"inv_name"                          "Vah Rudania"
+
+	// Weakness: Remote Bomb deals bonus damage
+	"hyrule_weakness"                   "weapon_remote_bomb"
+
+	// Very high health -> armored fire beast (base: 150)
+	"health"                            "600"
+
+	// Hits very hard per melee strike
+	"def_attack_melee"                  "melee_grunt"
+	"def_attack_leap"                   "melee_grunt_leap"
+
+	// Slower movement -> heavy armored beast
+	"run_speed"                         "120"
+	"walk_speed"                        "60"
+
+	// Very pain resistant -> tough hide
+	"painThreshold"                     "60"
+
+	// Aggressive rusher
+	"tactical_rush"                     "1"
+	"tactical_ranged"                   "0"
+}
+
+// =============================================================================
+//
+//  VAH RUTA – Divine Beast of Water
+//  Based on: monster_berserker
+//  Weakness: Thunderblade
+//  Lore: An elephant-shaped Divine Beast from Zora's Domain controlled by
+//        Waterblight Ganon. Slow but devastatingly powerful melee attacker.
+//
+// =============================================================================
+
+entityDef monster_vah_ruta
+{
+	"inherit"                           "monster_berserker"
+
+	"name"                              "Vah Ruta"
+	"inv_name"                          "Vah Ruta"
+
+	// Weakness: Thunderblade deals bonus damage (electric vs water)
+	"hyrule_weakness"                   "weapon_thunderblade"
+
+	// Very high health (base: 300)
+	"health"                            "700"
+
+	// Devastating melee damage -> water beast crashes down hard
+	"painThreshold"                     "50"
+
+	// Slower movement -> massive elephant beast
+	"run_speed"                         "100"
+	"walk_speed"                        "50"
+
+	// Only rushes, never retreats
+	"tactical_rush"                     "1"
+	"tactical_cover"                    "0"
+	"tactical_hide"                     "0"
+
+	// Bigger melee range -> massive size
+	"melee_range"                       "140"
+}
+
+// =============================================================================
+//
+//  CALAMITY GANON – The Final Boss
+//  Based on: monster_harvester
+//  Weakness: Master Sword + Ancient Bow (both deal bonus damage)
+//  Lore: The ancient evil that has plagued Hyrule for 10,000 years.
+//        Massive health pool, devastating attacks, never retreats.
+//
+// =============================================================================
+
+entityDef monster_calamity_ganon
+{
+	"inherit"                           "monster_harvester"
+
+	"name"                              "Calamity Ganon"
+	"inv_name"                          "Calamity Ganon"
+
+	// Weakness: Master Sword and Ancient Bow both deal bonus damage
+	"hyrule_weakness"                   "weapon_master_sword"
+	"hyrule_weakness2"                  "weapon_ancient_bow"
+
+	// Massive health -> final boss (harvester base is already high)
+	"health"                            "2000"
+
+	// Never backs down
+	"tactical_rush"                     "1"
+	"tactical_cover"                    "0"
+	"tactical_hide"                     "0"
+
+	// Extremely pain resistant
+	"painThreshold"                     "100"
+}

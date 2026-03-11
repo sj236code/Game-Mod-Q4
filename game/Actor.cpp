@@ -2396,8 +2396,31 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 		gameLocal.Error( "Unknown damageDef '%s'", damageDefName );
 	}
 
-	int	damage = damageDef->GetInt( "damage" ) * damageScale;
-	damage = GetDamageForLocation( damage, location );
+	int	damage = damageDef->GetInt("damage") * damageScale;
+	damage = GetDamageForLocation(damage, location);
+
+	// Hyrule Mod: weakness bonus damage system
+	// If the attacker is the player and the monster has a hyrule_weakness,
+	// check if the current weapon matches and double the damage.
+	if (attacker && attacker->IsType(idPlayer::GetClassType())) {
+		idPlayer* player = static_cast<idPlayer*>(attacker);
+		const char* weakness = spawnArgs.GetString("hyrule_weakness", "");
+		const char* weakness2 = spawnArgs.GetString("hyrule_weakness2", "");
+		const char* currentWeapon = player->spawnArgs.GetString(va("def_weapon%d", player->GetCurrentWeapon()));		if (weakness[0] && idStr::Icmp(currentWeapon, weakness) == 0) {
+			damage *= 2;
+			if (player->hud) {
+				player->hud->SetStateString("itemPickupText", "WEAKNESS! 2x Damage!");
+				player->hud->HandleNamedEvent("itemPickup");
+			}
+		}
+		else if (weakness2[0] && idStr::Icmp(currentWeapon, weakness2) == 0) {
+			damage *= 2;
+			if (player->hud) {
+				player->hud->SetStateString("itemPickupText", "WEAKNESS! 2x Damage!");
+				player->hud->HandleNamedEvent("itemPickup");
+			}
+		}
+	}
 
 	// friendly fire damage
 	bool noDmgFeedback = false;
