@@ -93,3 +93,15 @@ This README and the launch script use **Hyrule** as the mod folder name. If the 
 | **Ancient Bow** | Railgun | Very slow fire rate (2.5s), massive damage (200), zero spread | Charging and releasing a devastating ancient arrow |
 | **Lizal Boomerang** | Grenade Launcher | Arcing projectile, moderate damage (60), 1.0s fire rate | Throwing a returning boomerang |
 | **Boko Club** | Gauntlet (melee) | High damage (60), slower swing (0.7s) than Master Sword | Heavy, crude club with powerful but sluggish swings |
+
+## Zelda Beast Enemies
+
+| Beast | Lore | Base Enemy | Health | Weakness | Combat Style |
+|-------|------|------------|--------|----------|--------------|
+| **Vah Naboris** | Lightning Divine Beast from the Gerudo Desert | Strogg Marine | 350 | Ancient Bow | Fast and aggressive, closes distance quickly and fires rapid energy blasts |
+| **Vah Medoh** | Wind Divine Beast from the Rito region | Strogg Marine (MG) | 300 | Traveler's Bow | Long-range rapid-fire attacker, engages from a distance with sustained bursts |
+| **Vah Rudania** | Fire Divine Beast from Death Mountain | Grunt | 600 | Remote Bomb | Slow armored tank, extremely tough hide, rushes the player with devastating melee strikes |
+| **Vah Ruta** | Water Divine Beast from Zora's Domain | Berserker | 700 | Thunderblade | Massive slow-moving beast, nearly unstoppable up close, electric weapons exploit its water body |
+| **Calamity Ganon** | The ancient evil that has plagued Hyrule for 10,000 years | Harvester (Boss) | 2000 | Master Sword + Ancient Bow | The final boss — never retreats, absorbs enormous punishment, only the Master Sword and Ancient Bow deal full damage |
+
+> **Tip:** Hit each beast with its weakness weapon for bonus damage. Fighting Ganon without the Master Sword or Ancient Bow is possible but will take much longer.
