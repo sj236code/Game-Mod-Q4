@@ -9,7 +9,7 @@ windowDef Desktop
 	windowDef bg
 	{
 		rect		0, 0, 640, 480
-		backcolor	0, 0, 0, 0.88
+		backcolor	0, 0, 0, 0.90
 		visible		1
 	}
 
@@ -51,7 +51,7 @@ windowDef Desktop
 		textscale	0.22
 		font		"fonts/marine"
 		textalign	1
-		text		"A Zelda / Breath of the Wild reskin for Quake 4"
+		text		"A Zelda: Breath of the Wild reskin for Quake 4"
 	}
 
 	//----------------------------------------------------
@@ -78,9 +78,9 @@ windowDef Desktop
 		rect		54, 68, 550, 40
 		visible		1
 		forecolor	0.86, 0.92, 0.76, 0.9
-		textscale	0.22
+		textscale	0.20
 		font		"fonts/marine"
-		text		"All Quake 4 weapons have been replaced with Zelda-themed equivalents. Master Sword, Traveler's Bow, Soldier's Bow, Guardian Bow, Ancient Bow, Remote Bomb, Fire Rod, Thunderblade, and Lizal Boomerang. Use the weapon switch keys to cycle between them."
+		text		"Master Sword (fast melee, 80 dmg)  |  Traveler's Bow (single arrow, slow)  |  Soldier's Bow (heavy arrow, 55 dmg)  |  Guardian Bow (rapid ancient pulses, 20 dmg)  |  Remote Bomb (2s fuse, 120 dmg)  |  Fire Rod (fire bursts, 40 dmg)  |  Thunderblade (electric beam, 18/tick)  |  Ancient Bow (charge shot, 200 dmg)  |  Lizal Boomerang (arcing, 60 dmg)  |  Boko Club (slow melee, 60 dmg)"
 	}
 
 	windowDef div1
@@ -91,7 +91,7 @@ windowDef Desktop
 	}
 
 	//----------------------------------------------------
-	// SECTION 2 – Upgrades
+	// SECTION 2 – Zelda Beasts & Weaknesses
 	//----------------------------------------------------
 	windowDef sec2_icon
 	{
@@ -107,73 +107,37 @@ windowDef Desktop
 		textscale	0.30
 		font		"fonts/marine"
 		textstyle	1
-		text		"UPGRADES"
+		text		"DIVINE BEASTS  &  CALAMITY GANON"
 	}
 	windowDef sec2_body
 	{
-		rect		54, 128, 550, 40
+		rect		54, 128, 550, 52
 		visible		1
 		forecolor	0.86, 0.92, 0.76, 0.9
-		textscale	0.22
+		textscale	0.20
 		font		"fonts/marine"
-		text		"Open the in-game store to spend rupees on upgrades. Health Upgrade (+25 max HP, costs 10 rupees), Speed Upgrade (+10% run speed, costs 15 rupees), and Ammo Refill (refills all ammo, costs 5 rupees). Upgrades stack – buy multiple times."
+		text		"Vah Naboris (350 HP)  weakness: Ancient Bow  |  Vah Medoh (300 HP)  weakness: Traveler's Bow\nVah Rudania (600 HP)  weakness: Remote Bomb  |  Vah Ruta (700 HP)  weakness: Thunderblade\nCalamity Ganon (2000 HP)  weakness: Master Sword + Ancient Bow  (final boss – never retreats)\nHit each beast with its weakness weapon for 2x bonus damage!"
 	}
 
 	windowDef div2
 	{
-		rect		54, 168, 556, 1
+		rect		54, 182, 556, 1
 		backcolor	0.82, 0.70, 0.10, 0.35
 		visible		1
 	}
 
 	//----------------------------------------------------
-	// SECTION 3 – Zelda Beasts
+	// SECTION 3 – Findable Items
 	//----------------------------------------------------
 	windowDef sec3_icon
 	{
-		rect		40, 178, 8, 8
+		rect		40, 192, 8, 8
 		backcolor	0.98, 0.88, 0.20, 1
 		visible		1
 	}
 	windowDef sec3_heading
 	{
-		rect		54, 172, 560, 18
-		visible		1
-		forecolor	0.98, 0.88, 0.20, 1
-		textscale	0.30
-		font		"fonts/marine"
-		textstyle	1
-		text		"ZELDA BEASTS"
-	}
-	windowDef sec3_body
-	{
-		rect		54, 188, 550, 40
-		visible		1
-		forecolor	0.86, 0.92, 0.76, 0.9
-		textscale	0.22
-		font		"fonts/marine"
-		text		"Five Quake 4 monsters have been rethemed as Zelda creatures. Each beast has a different elemental weakness. Hit them with the matching weapon type for bonus damage. Experiment with your weapons to find what works best against each enemy."
-	}
-
-	windowDef div3
-	{
-		rect		54, 228, 556, 1
-		backcolor	0.82, 0.70, 0.10, 0.35
-		visible		1
-	}
-
-	//----------------------------------------------------
-	// SECTION 4 – Findable Items
-	//----------------------------------------------------
-	windowDef sec4_icon
-	{
-		rect		40, 238, 8, 8
-		backcolor	0.98, 0.88, 0.20, 1
-		visible		1
-	}
-	windowDef sec4_heading
-	{
-		rect		54, 232, 560, 18
+		rect		54, 186, 560, 18
 		visible		1
 		forecolor	0.98, 0.88, 0.20, 1
 		textscale	0.30
@@ -181,35 +145,35 @@ windowDef Desktop
 		textstyle	1
 		text		"FINDABLE ITEMS"
 	}
-	windowDef sec4_body
+	windowDef sec3_body
 	{
-		rect		54, 248, 550, 40
+		rect		54, 202, 550, 40
 		visible		1
 		forecolor	0.86, 0.92, 0.76, 0.9
-		textscale	0.22
+		textscale	0.20
 		font		"fonts/marine"
-		text		"Five unique items are hidden throughout the map. Explore every corner to find them all. Items include Heart Pieces, Korok Seeds, and Rupee caches. Picking up rupees adds them to your wallet so you can spend them at the store."
+		text		"Five items are hidden throughout the map – find them all!\nGreen Rupee (+1)  |  Blue Rupee (+5)  |  Red Rupee (+20)  |  Korok Seed (+15% jump height)  |  Stamina Vessel (+10% run speed)\nRupees go straight to your wallet. Korok Seeds and Stamina Vessels stack permanently – collect as many as you can."
 	}
 
-	windowDef div4
+	windowDef div3
 	{
-		rect		54, 288, 556, 1
+		rect		54, 244, 556, 1
 		backcolor	0.82, 0.70, 0.10, 0.35
 		visible		1
 	}
 
 	//----------------------------------------------------
-	// SECTION 5 – Rupee Store
+	// SECTION 4 – Rupee Store
 	//----------------------------------------------------
-	windowDef sec5_icon
+	windowDef sec4_icon
 	{
-		rect		40, 298, 8, 8
+		rect		40, 254, 8, 8
 		backcolor	0.98, 0.88, 0.20, 1
 		visible		1
 	}
-	windowDef sec5_heading
+	windowDef sec4_heading
 	{
-		rect		54, 292, 560, 18
+		rect		54, 248, 560, 18
 		visible		1
 		forecolor	0.98, 0.88, 0.20, 1
 		textscale	0.30
@@ -217,19 +181,55 @@ windowDef Desktop
 		textstyle	1
 		text		"RUPEE STORE"
 	}
-	windowDef sec5_body
+	windowDef sec4_body
 	{
-		rect		54, 308, 550, 40
+		rect		54, 264, 550, 40
 		visible		1
 		forecolor	0.86, 0.92, 0.76, 0.9
-		textscale	0.22
+		textscale	0.20
 		font		"fonts/marine"
-		text		"Collect rupees by picking up Green (1), Blue (5), and Red (20) rupee items in the level. Press the store key to open the shop. Your current rupee count is always shown in the top-right of the HUD. Spend wisely!"
+		text		"Press [ B ] to open the store. Your rupee count is always shown in the top-right of the HUD.\nHealth Upgrade  +25 max HP  –  10 rupees  |  Speed Upgrade  +10% run speed  –  15 rupees\nAmmo Refill  refills all ammo  –  5 rupees  |  All upgrades stack – buy as many times as you can afford."
+	}
+
+	windowDef div4
+	{
+		rect		54, 306, 556, 1
+		backcolor	0.82, 0.70, 0.10, 0.35
+		visible		1
+	}
+
+	//----------------------------------------------------
+	// SECTION 5 – Tips
+	//----------------------------------------------------
+	windowDef sec5_icon
+	{
+		rect		40, 316, 8, 8
+		backcolor	0.98, 0.88, 0.20, 1
+		visible		1
+	}
+	windowDef sec5_heading
+	{
+		rect		54, 310, 560, 18
+		visible		1
+		forecolor	0.98, 0.88, 0.20, 1
+		textscale	0.30
+		font		"fonts/marine"
+		textstyle	1
+		text		"TIPS"
+	}
+	windowDef sec5_body
+	{
+		rect		54, 326, 550, 40
+		visible		1
+		forecolor	0.86, 0.92, 0.76, 0.9
+		textscale	0.20
+		font		"fonts/marine"
+		text		"Exploit beast weaknesses – 2x damage makes tough fights much faster. Stack Korok Seeds and Stamina Vessels before fighting late enemies.\nSave rupees for Health Upgrades before taking on Calamity Ganon. Fighting Ganon without the Master Sword or Ancient Bow is possible but will take significantly longer.\nYou can buy Speed Upgrades multiple times – each one stacks for faster and faster movement."
 	}
 
 	windowDef div5
 	{
-		rect		54, 348, 556, 1
+		rect		54, 368, 556, 1
 		backcolor	0.82, 0.70, 0.10, 0.35
 		visible		1
 	}
@@ -237,24 +237,14 @@ windowDef Desktop
 	//----------------------------------------------------
 	// Controls reminder
 	//----------------------------------------------------
-	windowDef controls_heading
-	{
-		rect		54, 352, 560, 16
-		visible		1
-		forecolor	0.70, 0.85, 1.0, 1
-		textscale	0.26
-		font		"fonts/marine"
-		textstyle	1
-		text		"CONTROLS"
-	}
 	windowDef controls_body
 	{
-		rect		54, 368, 550, 30
+		rect		54, 372, 550, 22
 		visible		1
-		forecolor	0.86, 0.92, 0.76, 0.85
-		textscale	0.22
+		forecolor	0.70, 0.85, 1.0, 0.85
+		textscale	0.20
 		font		"fonts/marine"
-		text		"Open Store: [ F3 ]          Close Store / Help: [ F3 / ESC ]          Cycle Weapons: [ Mouse Wheel ]"
+		text		"Open Store: [ B ]     Close Store: [ B / ESC ]     Open Help: [ H ]     Close Help: [ H / ESC ]     Cycle Weapons: [ Mouse Wheel ]"
 	}
 
 	//----------------------------------------------------
